@@ -1,0 +1,8 @@
+# AWS Samples
+
+## Config
+
+```
+export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID
+export AWS_SECRET_KEY=YOUR_SECRET_KEY_ID
+``` 
