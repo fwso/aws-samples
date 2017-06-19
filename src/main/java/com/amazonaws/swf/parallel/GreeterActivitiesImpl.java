@@ -44,8 +44,8 @@ public class GreeterActivitiesImpl implements GreeterActivities {
         System.out.println(Long.toString((new Date()).getTime()/1000) + "OK, <= 50, " + msg);
     }
     
-    public void finalize(String msg, Boolean c) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ", FINAL: " + msg + ", boolean: " + c.toString());
+    public void finalize(String msg) {
+        System.out.println(Long.toString((new Date()).getTime()/1000) + ", FINAL: " + msg + ", boolean: ");
     }
 
 }

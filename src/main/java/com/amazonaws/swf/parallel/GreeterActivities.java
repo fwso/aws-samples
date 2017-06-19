@@ -21,5 +21,5 @@ public interface GreeterActivities {
     
     public void falseFaction(String msg);
     
-    public void finalize(String msg, Boolean c);
+    public void finalize(String msg);
 }
