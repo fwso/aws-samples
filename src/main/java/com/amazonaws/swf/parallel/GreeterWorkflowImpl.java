@@ -24,8 +24,11 @@ public class GreeterWorkflowImpl implements GreeterWorkflow {
 
         Boolean v = lt50.get();
 
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ">>>>>>>>>>>>>>>" + v.toString());
+        System.out.println(Long.toString((new Date()).getTime() / 1000) + ">>>>>>>>>>>>>>>" + v.toString());
 
-        return Promise.Void();
+        if (v.booleanValue() == true) {
+            return operations.trueAction("TRUE");
+        }
+        return operations.falseFaction("FALSE");
     }
 }

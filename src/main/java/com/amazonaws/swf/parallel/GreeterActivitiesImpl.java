@@ -37,15 +37,15 @@ public class GreeterActivitiesImpl implements GreeterActivities {
     }
 
     public void trueAction(String msg) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + "Good, > 50, " + msg);
+        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Good, > 50, " + msg);
     }
 
     public void falseFaction(String msg) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + "OK, <= 50, " + msg);
+        System.out.println(Long.toString((new Date()).getTime()/1000) + ":OK, <= 50, " + msg);
     }
     
     public void finalize(String msg) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ", FINAL: " + msg + ", boolean: ");
+        System.out.println(Long.toString((new Date()).getTime()/1000) + ", FINAL: " + msg + ",  this should be the last step.");
     }
 
 }
