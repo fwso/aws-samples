@@ -9,17 +9,19 @@ import com.amazonaws.services.simpleworkflow.flow.core.Promise;
 @Activities(version="5.0")
 
 public interface GreeterActivities {
-    public String getName();
+    String getName();
 
-    public String getGreeting();
+    String getGreeting();
 
-    public void say(String greeting, String name);
+    void say(String greeting, String name);
     
-    public boolean validate();
+    boolean validate();
     
-    public void trueAction(String msg);
+    void trueAction(String msg);
     
-    public void falseFaction(String msg);
-    
-    public void finalize(String msg);
+    void falseFaction(String msg);
+
+    void daemonAct(String param);
+
+    void finalize(String msg);
 }

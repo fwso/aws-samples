@@ -1,5 +1,7 @@
 #!/bin/bash
 
-. env.sh
+. ../aws-key.sh
 
-java -cp target/samples-1.0.0-jar-with-dependencies.jar com.amazonaws.swf.parallel.GreeterMain $@
+logpath=/tmp/log4j/starter
+
+java -Dlog=$logpath -cp target/samples-1.0.0-jar-with-dependencies.jar com.amazonaws.swf.parallel.GreeterMain $@

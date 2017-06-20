@@ -1,35 +1,40 @@
 package com.amazonaws.swf.parallel;
 
-import java.util.Date;
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.ThreadLocalRandom;
+
+import static com.amazonaws.swf.parallel.Helper.println;
 
 public class GreeterActivitiesImpl implements GreeterActivities {
 
+    private Logger logger = Logger.getLogger(GreeterActivitiesImpl.class);
+
     public String getName() {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Start: getName()");
+        logger.info("Started: getName() activity");
+        println(":Start: getName()");
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Done : getName()");
+        println(":Done : getName()");
         return "World!";
     }
 
     public String getGreeting() {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Start: getGreeting()");
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Done : getGreeting()");
+        println("Start: getGreeting()");
+        println(":Done : getGreeting()");
         return "Hello ";
     }
 
     public void say(String greeting, String name) {
-        String ts = Long.toString((new Date()).getTime()/1000);
-        System.out.println(ts + ":" + greeting + name);
+        println(greeting + name);
     }
 
     public boolean validate() {
         int r = ThreadLocalRandom.current().nextInt(0, 100);
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Rand : " + r);
+        println("Rand : " + r);
         if (r > 50) {
             return true;
         }
@@ -37,15 +42,18 @@ public class GreeterActivitiesImpl implements GreeterActivities {
     }
 
     public void trueAction(String msg) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":Good, > 50, " + msg);
+        println("Good, > 50, " + msg);
     }
 
     public void falseFaction(String msg) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ":OK, <= 50, " + msg);
-    }
-    
-    public void finalize(String msg) {
-        System.out.println(Long.toString((new Date()).getTime()/1000) + ", FINAL: " + msg + ",  this should be the last step.");
+        println("OK, <= 50, " + msg);
     }
 
+    public void daemonAct(String param) {
+        logger.info("daemonAct() activity running with parameters: " + param);
+    }
+
+    public void finalize(String msg) {
+        println("finalize: " + msg + ",  this should be the last step.");
+    }
 }
