@@ -8,27 +8,33 @@ import com.amazonaws.services.simpleworkflow.AmazonSimpleWorkflowClient;
 //import com.amazonaws.services.simpleworkflow.AmazonSimpleWorkflowClientBuilder;
 import com.amazonaws.services.simpleworkflow.flow.ActivityWorker;
 import com.amazonaws.services.simpleworkflow.flow.WorkflowWorker;
+import org.apache.log4j.Logger;
+import org.codehaus.plexus.logging.AbstractLogger;
 
 public class GreeterWorkflowWorker {
+
+    protected static Logger logger = Logger.getLogger(GreeterWorkflowWorker.class);
+
     public static void main(String[] args) throws Exception {
-        ClientConfiguration config = new ClientConfiguration().withSocketTimeout(70 * 1000);
 
-        String swfAccessId = System.getenv("AWS_ACCESS_KEY_ID");
-        String swfSecretKey = System.getenv("AWS_SECRET_KEY");
-        System.out.println("Access ID: " + swfAccessId);
-        AWSCredentials awsCredentials = new BasicAWSCredentials(swfAccessId, swfSecretKey);
+        boolean withErrorHandling = false;
 
-        AmazonSimpleWorkflow service = new AmazonSimpleWorkflowClient(awsCredentials, config);
-        // AmazonSimpleWorkflow service =
-        // AmazonSimpleWorkflowClientBuilder.defaultClient();
+        if (args.length > 0 && args[0].equals("--with-error-handler")) {
+            logger.info("Start with error handling");
+            withErrorHandling = true;
+        }
 
-        service.setEndpoint("https://swf.eu-west-1.amazonaws.com");
+        AmazonSimpleWorkflow service = Helper.getSWFClient();
 
-        String domain = "swfdemo";
+        String domain = Helper.getDomain();
         String taskListToPoll = "HelloWorldParallelList";
 
         WorkflowWorker wfw = new WorkflowWorker(service, domain, taskListToPoll);
-        wfw.addWorkflowImplementationType(GreeterWorkflowImpl.class);
+        if (withErrorHandling) {
+            wfw.addWorkflowImplementationType(GreeterWorkflowImplWithTryCatch.class);
+        } else {
+            wfw.addWorkflowImplementationType(GreeterWorkflowImpl.class);
+        }
         wfw.start();
     }
 }

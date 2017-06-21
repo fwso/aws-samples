@@ -26,31 +26,14 @@ public class GreeterMain {
 
 
         String id = args[0];
+        String domain = "swfdemo";
 
         logger.info("Workflow ID: " + id);
 
-        ClientConfiguration config = new ClientConfiguration().withSocketTimeout(70*1000);
-
-        String swfAccessId = System.getenv("AWS_ACCESS_KEY_ID");
-        String swfSecretKey = System.getenv("AWS_SECRET_KEY");
-        AWSCredentials awsCredentials = new BasicAWSCredentials(swfAccessId, swfSecretKey);
-        AWSCredentialsProvider awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
-
-        String domain = "swfdemo";
-        String region = "eu-west-1";
-        String endpoint = "https://swf.eu-west-1.amazonaws.com";
-        //AmazonSimpleWorkflow service = new AmazonSimpleWorkflowClient(awsCredentials, config);
-        //service.setEndpoint("https://swf.eu-west-1.amazonaws.com");
-
-        AmazonSimpleWorkflow service = AmazonSimpleWorkflowClientBuilder.standard()
-                .withCredentials(awsCredentialsProvider)
-                .withClientConfiguration(config)
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
-                .build();
-
+        AmazonSimpleWorkflow service = Helper.getSWFClient();
 
         GreeterWorkflowClientExternalFactory factory = new GreeterWorkflowClientExternalFactoryImpl(service, domain);
         GreeterWorkflowClientExternal greeter = factory.getClient(id);
-        greeter.greet();
+        greeter.greet(id);
     }
 }

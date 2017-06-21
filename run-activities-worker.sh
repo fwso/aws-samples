@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../aws-key.sh
+. ../aws-config.sh
 
 logpath=/tmp/log4j/activities
 
